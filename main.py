@@ -4,8 +4,9 @@ import defence_maneurs
 import melee_maneurs
 import ranged_maneurs
 import maneurs
+import credential
 
-bot = telebot.TeleBot('API KEY')
+bot = credential.connectto
 
 @bot.message_handler(commands=['start'])
 def start(message):
