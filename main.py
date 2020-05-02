@@ -100,7 +100,8 @@ def mess(message):
 		btn9 = types.KeyboardButton('Укрытие')
 		btn10 = types.KeyboardButton('Главное меню')
 		markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10)
-		final_message = "Выбери один из вариантов:"	
+		final_message = "Выбери один из вариантов:"
+		return(final_message)
 
 # обработка исключений
 	else:
@@ -113,7 +114,7 @@ def mess(message):
 		btn6 = types.KeyboardButton('Оружие ближнего боя')
 		btn7 = types.KeyboardButton('Дистанционное оружие')
 		markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7)
-		final_message = "Что-то пошло не так, выбери один из существующих пунктов меню:"
+		final_message = "Хочешь узнать что-то еще?:"
 		
 	if get_message_bot in maneurs.def_man:
 		markup = types.InlineKeyboardMarkup()
