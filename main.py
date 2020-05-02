@@ -1,8 +1,5 @@
 import telebot
 from telebot import types
-import defence_maneurs
-import melee_maneurs
-import ranged_maneurs
 import maneurs
 import credential
 bot = credential.connectto
@@ -118,21 +115,21 @@ def mess(message):
 		markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7)
 		final_message = "Что-то пошло не так, выбери один из существующих пунктов меню:"
 		
-	if get_message_bot in defence_maneurs.def_man:
+	if get_message_bot in maneurs.def_man:
 		markup = types.InlineKeyboardMarkup()
-		final_message = defence_maneurs.def_man[get_message_bot]
+		final_message = maneurs.def_man[get_message_bot]
 
 	elif get_message_bot in maneurs.usual:
 		markup = types.InlineKeyboardMarkup()
 		final_message = maneurs.usual[get_message_bot]
 
-	elif get_message_bot in melee_maneurs.at_man:
+	elif get_message_bot in maneurs.at_man:
 		markup = types.InlineKeyboardMarkup()
-		final_message = melee_maneurs.at_man[get_message_bot]
+		final_message = maneurs.at_man[get_message_bot]
 
-	elif get_message_bot in ranged_maneurs.rang_man:
+	elif get_message_bot in maneurs.rang_man:
 		markup = types.InlineKeyboardMarkup()
-		final_message = ranged_maneurs.rang_man[get_message_bot]
+		final_message = maneurs.rang_man[get_message_bot]
 
 	bot.send_message(message.chat.id, final_message, parse_mode='html', reply_markup=markup) #отправляет final_message
 bot.polling(none_stop=True)
