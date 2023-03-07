@@ -30,13 +30,23 @@ def mess(message):
     final_message = ""  # переменная для финального сообщения
     get_message_bot = message.text.strip().lower()  # считывает ввод в нижнем регистре
 
-    # главное меню
-    if get_message_bot == "главное меню":  # возврат в главное меню
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        markup.add(*menu.main_menu.values())
-        final_message = "Хочешь узнать что-то еще?:"
+    _lookup = {
+        "главное меню": [*menu.main_menu.values()],
+        "защитные маневры": [*menu.def_maneurs.values()],
+        "общие маневры": [*menu.usual_maneurs.values()],
+        "маневры ближнего боя": [*menu.range_maneurs.values()],
+        "маневры дистанционного боя": [*menu.def_maneurs.values()],
+        "различные подсказки": [*menu.tips.values()],
+        "таблицы": [*menu.graph_tables.values()]
+    }.get(get_message_bot)
 
-    elif get_message_bot == "ссылки":  # ссылка на сайт с книгами правил
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+    markup.add(_lookup.get(get_message_bot,
+                           final_message = "Неправильное значение, \
+                            пожалуйста выбери одно из меню:"))
+
+    # Ссылки
+    if get_message_bot == "ссылки":  # ссылка на сайт с книгами правил
         markup = types.InlineKeyboardMarkup()
         markup.add(types.InlineKeyboardButton("Перейти на wod.su", url="https://wod.su"))
         markup.add(types.InlineKeyboardButton("Перейти на studio101.ru", \
@@ -47,43 +57,50 @@ def mess(message):
                                 книгу правил на сайте studio101.ru',
                          parse_mode='html', reply_markup=markup)
 
-    # защитные маневры
-    elif get_message_bot == "защитные маневры":
+    # главное меню
+    if get_message_bot == "главное меню":  # возврат в главное меню
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        markup.add(*menu.def_maneurs.values(), menu.MAIN_BTN)
-        final_message = "Выбери один из вариантов:"
+        markup.add(*menu.main_menu.values())
+        final_message = "Хочешь узнать что-то еще?:"
 
-    # общие маневры
-    elif get_message_bot == "общие маневры":
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        markup.add(*menu.usual_maneurs.values(), menu.MAIN_BTN)
-        final_message = "Выбери один из вариантов:"
+    # # защитные маневры
+    # elif get_message_bot == "защитные маневры":
+    #     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+    #     markup.add(*menu.def_maneurs.values(), menu.MAIN_BTN)
+    #     final_message = "Выбери один из вариантов:"
 
-    # маневрый ближнего боя
-    elif get_message_bot == "маневры ближнего боя":
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*menu.melee_maneurs.values(), menu.MAIN_BTN)
-        final_message = "Выбери один из вариантов:"
+    # # общие маневры
+    # elif get_message_bot == "общие маневры":
+    #     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+    #     markup.add(*menu.usual_maneurs.values(), menu.MAIN_BTN)
+    #     final_message = "Выбери один из вариантов:"
 
-    # маневры дистанционного боя
-    elif get_message_bot == "маневры дистанционного боя":
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*menu.range_maneurs.values(), menu.MAIN_BTN)
-        final_message = "Выбери один из вариантов:"
+    # # маневрый ближнего боя
+    # elif get_message_bot == "маневры ближнего боя":
+    #     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
+    #     markup.add(*menu.melee_maneurs.values(), menu.MAIN_BTN)
+    #     final_message = "Выбери один из вариантов:"
 
-    # различные подсказки
-    elif get_message_bot == 'различные подсказки':
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*menu.tips.values(), menu.MAIN_BTN)
-        final_message = "Выбери один из вариантов:"
+    # # маневры дистанционного боя
+    # elif get_message_bot == "маневры дистанционного боя":
+    #     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
+    #     markup.add(*menu.range_maneurs.values(), menu.MAIN_BTN)
+    #     final_message = "Выбери один из вариантов:"
 
-    # графические таблицы
-    elif get_message_bot == 'таблицы':
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*menu.graph_tables.values(), menu.MAIN_BTN)
-        final_message = "Выбери один из вариантов:"
+    # # различные подсказки
+    # elif get_message_bot == "различные подсказки":
+    #     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
+    #     markup.add(*menu.tips.values(), menu.MAIN_BTN)
+    #     final_message = "Выбери один из вариантов:"
 
-    elif get_message_bot in maneurs.def_man:
+    # # графические таблицы
+    # elif get_message_bot == "таблицы":
+    #     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
+    #     markup.add(*menu.graph_tables.values(), menu.MAIN_BTN)
+    #     final_message = "Выбери один из вариантов:"
+
+
+    if get_message_bot in maneurs.def_man:
         markup = types.InlineKeyboardMarkup()
         final_message = maneurs.def_man[get_message_bot]
 
@@ -103,13 +120,10 @@ def mess(message):
         markup = types.InlineKeyboardMarkup()
         final_message = advanced.adv[get_message_bot]
 
-    elif get_message_bot in tables.graph_tab:
+    if get_message_bot in tables.graph_tab:
         markup = types.InlineKeyboardMarkup()
-#        photo = open(tables.graph_tab.get(get_message_bot), 'rb')
         with open(tables.graph_tab.get(get_message_bot), 'rb') as photo:
             bot.send_photo(message.chat.id, photo)
-#        bot.send_photo(message.chat.id, photo)
-#        photo.close()
 
     # обработка исключений
     else:
