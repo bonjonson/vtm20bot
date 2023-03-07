@@ -5,7 +5,8 @@ import credential
 import maneurs
 import tables
 #import logging
-from menu import *
+import menu
+# from menu import *menu.
 
 bot = credential.connectto
 # logger = telebot.logger
@@ -15,7 +16,7 @@ bot = credential.connectto
 def start(message):
     """Стартовое меню и приветствие"""
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-    markup.add(*start_btn_list.values())
+    markup.add(*menu.start_btn_list.values())
 
     send_message = f"<b>Привет {message.from_user.first_name} {message.from_user.last_name}\
         </b>!\nКакая информация " \
@@ -32,7 +33,7 @@ def mess(message):
     # главное меню
     if get_message_bot == "главное меню":  # возврат в главное меню
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        markup.add(*main_menu.values())
+        markup.add(*menu.main_menu.values())
         final_message = "Хочешь узнать что-то еще?:"
 
     elif get_message_bot == "ссылки":  # ссылка на сайт с книгами правил
@@ -49,37 +50,37 @@ def mess(message):
     # защитные маневры
     elif get_message_bot == "защитные маневры":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        markup.add(*def_maneurs.values(), MAIN_BTN)
+        markup.add(*menu.def_maneurs.values(), menu.MAIN_BTN)
         final_message = "Выбери один из вариантов:"
 
     # общие маневры
     elif get_message_bot == "общие маневры":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        markup.add(*usual_maneurs.values(), MAIN_BTN)
+        markup.add(*menu.usual_maneurs.values(), menu.MAIN_BTN)
         final_message = "Выбери один из вариантов:"
 
     # маневрый ближнего боя
     elif get_message_bot == "маневры ближнего боя":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*melee_maneurs.values(), MAIN_BTN)
+        markup.add(*menu.melee_maneurs.values(), menu.MAIN_BTN)
         final_message = "Выбери один из вариантов:"
 
     # маневры дистанционного боя
     elif get_message_bot == "маневры дистанционного боя":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*range_maneurs.values(), MAIN_BTN)
+        markup.add(*menu.range_maneurs.values(), menu.MAIN_BTN)
         final_message = "Выбери один из вариантов:"
 
     # различные подсказки
     elif get_message_bot == 'различные подсказки':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*tips.values(), MAIN_BTN)
+        markup.add(*menu.tips.values(), menu.MAIN_BTN)
         final_message = "Выбери один из вариантов:"
 
     # графические таблицы
     elif get_message_bot == 'таблицы':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-        markup.add(*graph_tables.values(), MAIN_BTN)
+        markup.add(*menu.graph_tables.values(), menu.MAIN_BTN)
         final_message = "Выбери один из вариантов:"
 
     elif get_message_bot in maneurs.def_man:
@@ -113,7 +114,7 @@ def mess(message):
     # обработка исключений
     else:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        markup.add(*main_menu.values(), MAIN_BTN)
+        markup.add(*menu.main_menu.values(), menu.MAIN_BTN)
         final_message = "Неправильное значение, пожалуйста выбери одно из меню:"
 
     bot.send_message(message.chat.id, final_message, parse_mode='html', \
