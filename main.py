@@ -1,6 +1,5 @@
 """Основной код"""
 from telebot import types
-import telebot
 import advanced
 import credential
 import maneurs
