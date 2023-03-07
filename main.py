@@ -1,3 +1,4 @@
+"""Основной код"""
 from telebot import types
 import telebot
 import advanced
@@ -104,8 +105,11 @@ def mess(message):
 
     elif get_message_bot in tables.graph_tab:
         markup = types.InlineKeyboardMarkup()
-        photo = open(tables.graph_tab.get(get_message_bot), 'rb')
-        bot.send_photo(message.chat.id, photo)
+#        photo = open(tables.graph_tab.get(get_message_bot), 'rb')
+        with open(tables.graph_tab.get(get_message_bot), 'rb') as photo:
+            bot.send_photo(message.chat.id, photo)
+#        bot.send_photo(message.chat.id, photo)
+#        photo.close()
 
     # обработка исключений
     else:
