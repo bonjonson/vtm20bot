@@ -105,7 +105,7 @@ def mess(message):
     elif get_message_bot in tables.graph_tab:
         markup = types.InlineKeyboardMarkup()
         photo = open(tables.graph_tab.get(get_message_bot), 'rb')
-        bot.send_photo(message.chat.id, photo)    
+        bot.send_photo(message.chat.id, photo)
 
     # обработка исключений
     else:
